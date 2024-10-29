@@ -1,4 +1,4 @@
-import { Request, response, Response } from "express";
+import { Request, Response } from "express";
 import { ObjectId } from "mongodb";
 import * as UserService from "./userService"
 import { UserType } from "../../types/userType";
@@ -6,13 +6,13 @@ import { UserType } from "../../types/userType";
     export async function findAllUsers (req: Request, res: Response) {
         try {
             const result = await UserService.findAllUsersService()
-
+            
             if (!result || result.length == 0)
-                res.status(404).send({ message: "No users found" })
-            res.status(200).send(result)
+                return res.status(404).send({ message: "No users found" })
 
+            return res.status(200).send(result)
         } catch (error) {
-            res.status(400).send({message: "Bad request at function findAllUsers"})
+            return res.status(400).send({message: "Bad request at function findAllUsers"})
         }
     }
 
@@ -20,20 +20,20 @@ import { UserType } from "../../types/userType";
         try {
             const id: string = req.params.id
             if (!id)
-                res.status(400).send({message: "Invalid id"})
+                return res.status(400).send({message: "Invalid id"})
             
             if (!ObjectId.isValid(id))
-                res.status(400).send({ message: "Invalid ObjectId format" })
+                return res.status(400).send({ message: "Invalid ObjectId format" })
 
             const objectId = new ObjectId(id)
 
             const result = await UserService.findUserByIdService(objectId)
 
             if (!result)
-                res.status(404).send({message: "User not found"})
-            res.status(200).send(result)
+                return res.status(404).send({message: "User not found"})
+            return res.status(200).send(result)
         } catch (error) {
-            res.status(400).send({message: "Bad request at function findUserById"})
+            return res.status(400).send({message: "Bad request at function findUserById"})
         }
     }
 
@@ -42,13 +42,13 @@ import { UserType } from "../../types/userType";
             const userData: UserType = req.body
 
             if (!userData.username || !userData.email || !userData.password)
-                res.status(400).send({message: "Bad request at function createUser"})
+                return res.status(400).send({message: "Bad request at function createUser"})
 
             const newUser = await UserService.createUserService(userData)
 
-            res.status(201).send({message: "User created successfully", data: newUser})
+            return res.status(201).send({message: "User created successfully", data: newUser})
         } catch (error) {
-            res.status(405).send({message: "createUser function not allowed"})
+            return res.status(405).send({message: "createUser function not allowed"})
         }
     }
 
@@ -57,18 +57,18 @@ import { UserType } from "../../types/userType";
             const id: string = req.params.id
 
             if (!ObjectId.isValid(id))
-                res.status(400).send({ message: "Invalid ObjectId format" })
+                return res.status(400).send({ message: "Invalid ObjectId format" })
             
             const objectId = new ObjectId(id)
 
             const result = await UserService.findUserByIdService(objectId)
 
             if (!result)
-                res.status(404).send({message: "User not found"})
+                return res.status(404).send({message: "User not found"})
             
             await UserService.deleteUserByIdService(objectId)
-            res.status(200).send(result)
+            return res.status(200).send(result)
         } catch (error) {
-            res.status(400).send({message: "Bad request at function deleteUser"})
+            return res.status(400).send({message: "Bad request at function deleteUser"})
         }
     }
