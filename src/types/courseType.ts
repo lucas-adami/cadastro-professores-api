@@ -1,13 +1,14 @@
 import { ObjectId } from "mongodb";
+import { ProfessorType } from "./professorType";
+import { CourseModel } from "../modules/Courses/courseEntity";
 
 export type CourseType = {
   id: ObjectId;
-  nome: string;
+  name: string;
   codCourse: string;
-  disciplinas: string[];
-  sigla: string;
-  modalidade: string;
-
-  professors: ObjectId[];
-  coordenador: ObjectId;
+  subjects?: string[];
+  initialism: string;
+  model: CourseModel;
+  professors?: ProfessorType[];
+  coordinator?: ProfessorType;
 };

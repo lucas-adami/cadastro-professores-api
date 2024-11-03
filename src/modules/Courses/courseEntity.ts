@@ -1,5 +1,6 @@
 import { Entity, ObjectIdColumn, Column } from "typeorm";
 import { ObjectId } from "mongodb";
+import { ProfessorType } from "../../types/professorType";
 
 export enum CourseModel {
   INPERSON = "in-person",
@@ -13,23 +14,23 @@ export class CourseEntity {
   id!: ObjectId;
 
   @Column({ unique: true })
-  nome!: string;
+  name!: string;
 
   @Column({ unique: true })
   codCourse!: string;
 
   @Column("simple-array")
-  disciplinas!: string[];
+  subjects!: string[];
 
   @Column({ unique: true })
-  sigla!: string;
+  initialism!: string;
 
   @Column({ enum: CourseModel, default: CourseModel.INPERSON })
-  modalidade!: string;
+  model: string;
 
-  @Column("array")
-  professors!: ObjectId[];
+  @Column("simple-json")
+  professors!: ProfessorType[];
 
-  @Column()
-  coordenador!: ObjectId;
+  @Column("simple-json")
+  coordinator!: ProfessorType;
 }
