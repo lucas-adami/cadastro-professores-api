@@ -1,12 +1,7 @@
 import { Entity, ObjectIdColumn, Column } from "typeorm";
 import { ObjectId } from "mongodb";
 import { ProfessorType } from "../../types/professorType";
-
-export enum CourseModel {
-  INPERSON = "in-person",
-  BLENDED = "blended",
-  HOMESCHOOL = "home-school",
-}
+import { CourseEnum } from "../../types/courseEnum";
 
 @Entity("Courses")
 export class CourseEntity {
@@ -25,7 +20,7 @@ export class CourseEntity {
   @Column({ unique: true })
   initialism!: string;
 
-  @Column({ enum: CourseModel, default: CourseModel.INPERSON })
+  @Column({ enum: CourseEnum, default: CourseEnum.INPERSON })
   model: string;
 
   @Column("simple-json")

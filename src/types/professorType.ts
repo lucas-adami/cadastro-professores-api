@@ -1,25 +1,17 @@
 import { ObjectId } from 'mongodb';
-
-export type Titulacao = 'Mestre' | 'Doutor' | 'Especialista' | 'Graduado';
+import { titrationEnum } from './titrationEnum';
 
 export type ProfessorType = {
-  _id?: ObjectId;             
-  nome: string;               
-  email: string;              
-  password: string;          
-  titulacao: Titulacao;       
+  id: ObjectId;             
+  name: string;               
+  email: string;                      
+  titration: titrationEnum;       
   coursesId: ObjectId[];      
-  unidadeId?: string;         
-  referencia: string;         
+  unitId?: string;         
+  reference: string;         
   lattes: string;             
-  statusAtividade: string;    
+  activityStatus: string;    
   notes: string;              
 };
 
 
-export type FilterProfessorType = {
-  nome?: string;               
-  coursesId?: ObjectId[];      
-  titulacao?: Titulacao[];     
-  unidadeId?: string;        
-};

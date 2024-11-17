@@ -5,25 +5,22 @@ import * as bcrypt from 'bcrypt';
 @Entity('Professors') 
 export class ProfessorEntity {
     @ObjectIdColumn()
-    _id!: ObjectId;
+    id!: ObjectId;
 
     @Column() 
-    nome!: string;
+    name!: string;
 
     @Column({ unique: true }) 
     email!: string;
 
-    @Column({ select: false }) 
-    password!: string;
+    @Column() 
+    titration!: string;
 
     @Column() 
-    titulacao!: string;
+    unitId!: string;
 
     @Column() 
-    unidadeId!: string;
-
-    @Column() 
-    referencia!: string;
+    reference!: string;
 
     @Column() 
     lattes!: string;
@@ -32,17 +29,9 @@ export class ProfessorEntity {
     coursesId!: ObjectId[];
 
     @Column() 
-    statusAtividade!: string;
+    activityStatus!: string;
 
     @Column() 
     notes!: string;
-
-    @BeforeInsert() 
-    @BeforeUpdate() 
-    async hashPassword() {
-        if (this.password) { 
-            this.password = await bcrypt.hash(this.password, 10); 
-        }
-    }
 }
 

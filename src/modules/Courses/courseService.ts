@@ -2,7 +2,7 @@ import { ObjectId } from 'typeorm';
 import { AppDataSource } from '../../data-source';
 import { CourseType } from './../../types/courseType';
 import { CourseEntity } from './courseEntity';
-import { CourseModel } from './courseEntity';
+import { CourseEnum } from './../../types/courseEnum';
 
 const courseRepository = AppDataSource.getRepository(CourseEntity)
 
@@ -13,7 +13,7 @@ export async function findAllCourseService() {
 export async function createCourseService(courseData: CourseType) {
     const newCourse = courseRepository.create({
         ...courseData,
-        model: courseData.model ? courseData.model : CourseModel.INPERSON
+        model: courseData.model ? courseData.model : CourseEnum.INPERSON
     });
     return await courseRepository.save(newCourse);
 }

@@ -5,21 +5,21 @@ import { ProfessorType } from "../../types/professorType";
 
 export async function findAllProfessors(req: Request, res: Response) {
     try {
-        const professors = await ProfessorService.findAllProfessorsService();
+        const result = await ProfessorService.findAllProfessorsService();
 
-        if (!professors || professors.length === 0) {
+        if (!result || result.length === 0) {
             return res.status(404).send({ message: "No professors found" });
         }
 
-        return res.status(200).send(professors);
+        return res.status(200).send(result);
     } catch (error) {
         return res.status(500).send({ message: "Error when searching for professors" });
     }
 }
 
-export async function findById(req: Request, res: Response) {
+export async function findProfessorById(req: Request, res: Response) {
     try {
-        const id = req.params._id;
+        const id = req.params.id;
 
         if (!ObjectId.isValid(id)) {
             return res.status(400).send({ message: "Invalid ObjectId format" });
@@ -55,11 +55,11 @@ export async function createProfessor(req: Request, res: Response) {
 
 export async function updateProfessor(req: Request, res: Response) {
     try {
-        const id = req.params._id;
+        const id = req.params.id;
 
-        if (!ObjectId.isValid(id)) {
+        if (!ObjectId.isValid(id)) 
             return res.status(400).send({ message: "Invalid ObjectId format" });
-        }
+
 
         const objectId = new ObjectId(id);
         const data: Partial<ProfessorType> = req.body;
@@ -70,10 +70,7 @@ export async function updateProfessor(req: Request, res: Response) {
             return res.status(404).send({ message: "Professor not found for update" });
         }
 
-        return res.status(200).send({
-            message: "Professor updated successfully",
-            data: updatedProfessor,
-        });
+        return res.status(200).send({message: "Professor updated successfully", data: updatedProfessor});
     } catch (error) {
         return res.status(500).send({ message: "Error updating professor" });
     }
@@ -81,18 +78,16 @@ export async function updateProfessor(req: Request, res: Response) {
 
 export async function deleteProfessor(req: Request, res: Response) {
     try {
-        const id = req.params._id;
+        const id = req.params.id;
 
-        if (!ObjectId.isValid(id)) {
+        if (!ObjectId.isValid(id)) 
             return res.status(400).send({ message: "Invalid ObjectId format" });
-        }
 
         const objectId = new ObjectId(id);
         const result = await ProfessorService.deleteProfessorByIdService(objectId);
 
-        if (result.affected === 0) {
+        if (result.affected === 0) 
             return res.status(404).send({ message: "Professor not found for deletion" });
-        }
 
         return res.status(200).send({ message: "Professor deleted successfully" });
     } catch (error) {

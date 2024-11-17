@@ -1,6 +1,6 @@
+import { CourseEnum } from './courseEnum';
 import { ObjectId } from "mongodb";
 import { ProfessorType } from "./professorType";
-import { CourseModel } from "../modules/Courses/courseEntity";
 
 export type CourseType = {
   id: ObjectId;
@@ -8,7 +8,7 @@ export type CourseType = {
   codCourse: string;
   subjects?: string[];
   initialism: string;
-  model: CourseModel;
+  model: CourseEnum;
   professors?: ProfessorType[];
   coordinator?: ProfessorType;
 };
