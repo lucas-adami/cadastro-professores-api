@@ -21,7 +21,7 @@ export class CourseEntity {
   initialism!: string;
 
   @Column({ enum: CourseEnum, default: CourseEnum.INPERSON })
-  model: string;
+  model!: CourseEnum;
 
   @Column("simple-json")
   professors!: ProfessorType[];

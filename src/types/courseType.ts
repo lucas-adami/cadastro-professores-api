@@ -3,7 +3,7 @@ import { ObjectId } from "mongodb";
 import { ProfessorType } from "./professorType";
 
 export type CourseType = {
-  id: ObjectId;
+  id?: ObjectId;
   name: string;
   codCourse: string;
   subjects?: string[];
